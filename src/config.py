@@ -22,6 +22,16 @@ USER_AGENT = os.getenv(
 OUTPUT_DIR = Path(os.getenv("AUTO_OUTPUT_DIR", "output"))
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# API ключи (опционально, для генерации через нейросеть)
+# Референс постера (прикреплённый к ТЗ пример AUDI TT RS)
+# Положите reference.png / reference.jpg в корень проекта
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+REFERENCE_IMAGE: Path | None = None
+for _name in ("reference.png", "reference.jpg", "reference.jpeg"):
+    _p = PROJECT_ROOT / _name
+    if _p.exists():
+        REFERENCE_IMAGE = _p
+        break
+
+# API-ключ OpenAI (опционально, для генерации фото авто через DALL-E)
+# Если ключ не задан -- используется фото с сайта или постер без фото
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-REPLICATE_API_TOKEN = os.getenv("REPLICATE_API_TOKEN", "")
